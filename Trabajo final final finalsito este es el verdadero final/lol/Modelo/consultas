@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consultas SQL: declaración SELECT, WHERE y sentencias JOIN</title>
+  <style>
+    /* Estilos CSS */
+  </style>
+</head>
+<body>
+  <h1>Consultas SQL: declaración SELECT, WHERE y sentencias JOIN</h1>
+
+  <h2>1. Mostrar los datos de 10 empleados de la compañía.</h2>
+  <?php
+  // Realizar la consulta y mostrar los resultados
+  $conexion = new mysqli("localhost", "usuario", "contraseña", "basedatos");
+  if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
+  }
+
+  $consulta1 = "SELECT * FROM empleados LIMIT 10";
+  $resultado1 = $conexion->query($consulta1);
+
+  if ($resultado1->num_rows > 0) {
+    echo "<table>";
+    echo "<tr><th>Nombre</th><th>Edad</th><th>Email</th></tr>";
+
+    while ($fila = $resultado1->fetch_assoc()) {
+      echo "<tr>";
+      echo "<td>" . $fila["nombre"] . "</td>";
+      echo "<td>" . $fila["edad"] . "</td>";
+      echo "<td>" . $fila["email"] . "</td>";
+      echo "</tr>";
+    }
+
+    echo "</table>";
+  } else {
+    echo "<p>No se encontraron resultados.</p>";
+  }
+
+  $conexion->close();
+  ?>
+
+</body>
+</html>
